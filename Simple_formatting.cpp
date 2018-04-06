@@ -32,9 +32,9 @@ int main(){
 	cout << "y = " << bitset<8>(y) << " = " << dec << y << " = " << hex << y << endl;
 	cout << "z = " << bitset<32>(z) << " = " << dec << z << " = " << hex << z << endl;
 	
-	cout << uppercase << endl;
-	cout << "y = " << bitset<8>(y) << " = " << dec << y << " = " << hex << y << endl;
-	cout << "z= " << bitset<32>(z) << " = " << dec << z << " = " << hex << z << endl;
+	//cout << uppercase << endl;
+	//cout << "y = " << bitset<8>(y) << " = " << dec << y << " = " << hex << y << endl;
+	//cout << "z= " << bitset<32>(z) << " = " << dec << z << " = " << hex << z << endl;
 	
 	return 0;
 }
