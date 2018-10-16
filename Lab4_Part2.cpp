@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <cmath>
 #include <climits>
+#include <iomanip>
 using namespace std;
 
 string getFileName(int);//take file number as input
@@ -45,7 +46,7 @@ int main(int argc, char *argv[]) {
 		while(argv[count]){
 			if(argv[count][0]=='-'&&argv[count][1]=='n'){
 				if(isdigit(argv[count+1][0])){
-					fileNumber = atoi(argv[count+1]);
+					fileNumber = atof(argv[count+1]);
 				}
 				else{
 					cout<<"Wrong format!"<<endl;
@@ -75,7 +76,7 @@ int main(int argc, char *argv[]) {
 				return 0;//check format
 			}
 			else if(isdigit(argv[count+1][0])){
-				double offsetNumber = atoi(argv[count+1]);
+				double offsetNumber = atof(argv[count+1]);
 				offsetFileSignal(fileNumber,"-o",offsetNumber);
 				count = count + 2;
 			}//This is the correct format, call offset function
@@ -92,7 +93,7 @@ int main(int argc, char *argv[]) {
 				return 0;//check format
 			}
 			else if(isdigit(argv[count+1][0])){
-				double scaleNumber = atoi(argv[count+1]);
+				double scaleNumber = atof(argv[count+1]);
 				scaleFileSignal(fileNumber,"-s",scaleNumber);
 				count = count + 2;
 			}//This is the correct format, call the function
@@ -228,7 +229,7 @@ void offsetFileSignal(int number, string operation, double offset)
 
 	while(!in.eof()){
 		in.getline(line,sizeof(line),'\n');
-		out<<atof(line)+offset<<endl;
+		out<<setprecision(4)<<setiosflags(ios_base::fixed)<<atof(line)+offset<<endl;
 	}//read the file until end
 
 	in.close();
@@ -263,7 +264,7 @@ void scaleFileSignal(int number, string operation, double scale)
 
 	while(!in.eof()){
 		in.getline(line,sizeof(line),'\n');
-		out<<atof(line)*scale<<endl;
+		out<<setprecision(4)<<setiosflags(ios_base::fixed)<<atof(line)*scale<<endl;
 	}//read the file until end
 
 	in.close();
@@ -300,7 +301,7 @@ void renameAndCopyFile(int number, string fileName)
 	out<<atof(max)<<endl;
 	while(!in.eof()){
 		in.getline(line,sizeof(line),'\n');
-		out<<atof(line)<<endl;
+		out<<setprecision(4)<<setiosflags(ios_base::fixed)<<atof(line)<<endl;
 	}//read the file until end, copy them to the output file
 
 	in.close();
@@ -322,8 +323,8 @@ void getStatistics(int number, string operation)
 	double average = getAverageSignal(inFileName);
 	double max = getMaxSignal(inFileName);//get the average and max
 
-	out<<average<<" ";
-	out<<max<<endl;//put them in the output file
+	out<<setprecision(4)<<setiosflags(ios_base::fixed)<<average<<" ";
+	out<<setprecision(4)<<setiosflags(ios_base::fixed)<<max<<endl;//put them in the output file
 
 	out.close();
 }
@@ -359,7 +360,7 @@ void centeringSignal(int number, string operation)
 	out<<atof(max)<<endl;//This is the first line of output file
 	while(!in.eof()){
 		in.getline(line,sizeof(line),'\n');
-		out<<atof(line)-average<<endl;
+		out<<setprecision(4)<<setiosflags(ios_base::fixed)<<atof(line)-average<<endl;
 	}//read the file until end
 
 	in.close();
@@ -369,7 +370,7 @@ void centeringSignal(int number, string operation)
 void normalizeSignal(int number, string operation)
 {
 	string inFileName = getFileName(number);
-	double average = getAverageSignal(inFileName);
+	//double average = getAverageSignal(inFileName);
 	double max = getMaxSignal(inFileName);
 	double min = getMinSignal(inFileName);
 	string outFileName = createFileName(number,operation);
@@ -399,7 +400,7 @@ void normalizeSignal(int number, string operation)
 	out<<atof(max1)<<endl;//This is the first line of output file
 	while(!in.eof()){
 		in.getline(line,sizeof(line),'\n');
-		out<<(atof(line)-min)/(max-min)<<endl;
+		out<<setprecision(4)<<setiosflags(ios_base::fixed)<<(atof(line)-min)/(max-min)<<endl;
 	}//read the file until end
 
 	in.close();
